@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=4 uid="uid://b8dl63dna6pug"]
+[gd_scene load_steps=7 format=4 uid="uid://b8dl63dna6pug"]
 
 [ext_resource type="PackedScene" uid="uid://dnfspo8sfxdfh" path="res://Scenes/player.tscn" id="1_c4q82"]
 [ext_resource type="Texture2D" uid="uid://dih54oef0i833" path="res://Assets/Sprites/Tilesets/Tiles.png" id="2_ij7vl"]
@@ -132,10 +132,14 @@ texture = ExtResource("2_ij7vl")
 [sub_resource type="TileSet" id="TileSet_wap3n"]
 sources/0 = SubResource("TileSetAtlasSource_acaok")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tp7tu"]
+size = Vector2(109, 572)
+
 [node name="Game" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_c4q82")]
 position = Vector2(0, -1)
+collision_layer = 3
 motion_mode = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -151,3 +155,30 @@ tile_map_data = PackedByteArray("AADu//X/AAACAAIAAADu//b/AAACAAMAAADv//X/AAADAAI
 tile_set = SubResource("TileSet_wap3n")
 
 [node name="EnemySpawner" parent="." instance=ExtResource("3_315ww")]
+
+[node name="south wall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="south wall"]
+position = Vector2(1, 214)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_tp7tu")
+
+[node name="east wall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="east wall"]
+position = Vector2(342, -3)
+shape = SubResource("RectangleShape2D_tp7tu")
+
+[node name="north wall" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="north wall"]
+position = Vector2(1, -231)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_tp7tu")
+
+[node name="west wall" type="StaticBody2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="west wall"]
+position = Vector2(-339, -5)
+shape = SubResource("RectangleShape2D_tp7tu")
