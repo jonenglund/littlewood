@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bw6loikjc808s"]
+
+[ext_resource type="Texture2D" uid="uid://v64qyu1bsps0" path="res://Assets/Sprites/Weapons/Wood/Arrow_Wood.png" id="1_iquvm"]
+[ext_resource type="Script" path="res://Scripts/arrowprojectile.gd" id="1_tywmr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vdyh1"]
+size = Vector2(6, 4)
+
+[node name="Arrowprojecttile" type="Node2D"]
+script = ExtResource("1_tywmr")
+wobble_amplitude = 0.1
+wobble_frequency = 5.0
+
+[node name="simplearrow" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="simplearrow"]
+scale = Vector2(1.25, 1)
+texture = ExtResource("1_iquvm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="simplearrow"]
+position = Vector2(6, 0)
+shape = SubResource("RectangleShape2D_vdyh1")

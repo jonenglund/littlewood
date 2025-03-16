@@ -1,0 +1,157 @@
+[gd_scene load_steps=15 format=3 uid="uid://c5ckrl1qllkbi"]
+
+[ext_resource type="Script" path="res://Scripts/orc_enemy.gd" id="1_ic4sa"]
+[ext_resource type="Resource" uid="uid://dmv25wrq4qgv4" path="res://Scripts/OrcEnemy_stats.tres" id="2_mjfce"]
+[ext_resource type="Texture2D" uid="uid://d08e87qwyr317" path="res://Assets/Sprites/Enemies/Orc Crew/Orc/Idle/Idle-Sheet.png" id="2_u3bgp"]
+[ext_resource type="Texture2D" uid="uid://l40vdd56xgnq" path="res://Assets/Sprites/Enemies/Orc Crew/Orc/Run/Run-Sheet.png" id="3_5p11e"]
+[ext_resource type="Texture2D" uid="uid://c5dm7owwsxoe8" path="res://Assets/Sprites/Enemies/Orc Crew/Orc/Death/Death-Sheet.png" id="4_6c0pn"]
+[ext_resource type="Script" path="res://Scripts/state_machine.gd" id="5_fmxml"]
+[ext_resource type="Script" path="res://Scripts/enemyfollow.gd" id="6_ptrmg"]
+[ext_resource type="Script" path="res://Scripts/enemyattack.gd" id="8_0hf5i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1kk16"]
+size = Vector2(10, 28)
+
+[sub_resource type="Animation" id="Animation_6baqs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite2D/IdleSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemySprite2D/RunSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EnemySprite2D/DieSprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_e2wcm"]
+resource_name = "die"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite2D/DieSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_8j17e"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite2D/IdleSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_ahntm"]
+resource_name = "run"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemySprite2D/RunSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_54m4j"]
+_data = {
+"RESET": SubResource("Animation_6baqs"),
+"die": SubResource("Animation_e2wcm"),
+"idle": SubResource("Animation_8j17e"),
+"run": SubResource("Animation_ahntm")
+}
+
+[node name="OrcEnemy" type="CharacterBody2D" groups=["Enemies"]]
+motion_mode = 1
+script = ExtResource("1_ic4sa")
+stats = ExtResource("2_mjfce")
+speed_variance = 0.4
+health_variance = 0.3
+size_variance = 0.3
+animation_speed_multiplier = 0.5
+
+[node name="HitBox" type="CollisionShape2D" parent="."]
+top_level = true
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_1kk16")
+
+[node name="EnemySprite2D" type="Sprite2D" parent="."]
+
+[node name="RunSprite2D" type="Sprite2D" parent="EnemySprite2D"]
+position = Vector2(-1, -15)
+texture = ExtResource("3_5p11e")
+hframes = 6
+
+[node name="IdleSprite2D" type="Sprite2D" parent="EnemySprite2D"]
+texture = ExtResource("2_u3bgp")
+hframes = 4
+
+[node name="DieSprite2D" type="Sprite2D" parent="EnemySprite2D"]
+position = Vector2(0, -16)
+texture = ExtResource("4_6c0pn")
+hframes = 6
+
+[node name="EnemyAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_54m4j")
+}
+
+[node name="State Machine" type="Node2D" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("5_fmxml")
+initial_state = NodePath("Follow")
+
+[node name="Follow" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
+script = ExtResource("6_ptrmg")
+enemy = NodePath("../..")
+
+[node name="Attack" type="Node" parent="State Machine" node_paths=PackedStringArray("enemy")]
+script = ExtResource("8_0hf5i")
+enemy = NodePath("../..")

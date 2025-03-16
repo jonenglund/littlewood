@@ -1,0 +1,106 @@
+[gd_scene load_steps=11 format=3 uid="uid://dnfspo8sfxdfh"]
+
+[ext_resource type="Texture2D" uid="uid://drfdy2124dyq" path="res://Assets/Sprites/Player/Rogue/Idle/Idle-Sheet.png" id="1_b12gj"]
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_ktt5j"]
+[ext_resource type="Texture2D" uid="uid://ba6rftgqu4lj3" path="res://Assets/Sprites/Player/Rogue/Run/Run-Sheet.png" id="3_dgvjx"]
+[ext_resource type="Script" path="res://Scripts/weapon_holder.gd" id="4_qadpk"]
+[ext_resource type="PackedScene" uid="uid://q2iaqy87ltc3" path="res://Scenes/weapon.tscn" id="5_kck02"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r7cn7"]
+radius = 7.0
+height = 26.0
+
+[sub_resource type="Animation" id="Animation_qtrm6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Idle2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Run2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_acch8"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Idle2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_f1g6t"]
+resource_name = "run"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Run2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5twcp"]
+_data = {
+"RESET": SubResource("Animation_qtrm6"),
+"idle": SubResource("Animation_acch8"),
+"run": SubResource("Animation_f1g6t")
+}
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+script = ExtResource("1_ktt5j")
+
+[node name="Idle2D" type="Sprite2D" parent="."]
+position = Vector2(-1, -3)
+texture = ExtResource("1_b12gj")
+hframes = 4
+
+[node name="Run2D" type="Sprite2D" parent="."]
+position = Vector2(0, -17)
+texture = ExtResource("3_dgvjx")
+hframes = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_r7cn7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5twcp")
+}
+
+[node name="WeaponHolder" type="Node2D" parent="."]
+script = ExtResource("4_qadpk")
+weapon_scale = 0.75
+
+[node name="Weapon" parent="WeaponHolder" instance=ExtResource("5_kck02")]

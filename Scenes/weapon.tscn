@@ -1,0 +1,82 @@
+[gd_scene load_steps=9 format=3 uid="uid://q2iaqy87ltc3"]
+
+[ext_resource type="Script" path="res://Scripts/weapon.gd" id="1_8ld5v"]
+[ext_resource type="PackedScene" uid="uid://bw6loikjc808s" path="res://Scenes/arrowprojectile.tscn" id="2_dj4k7"]
+[ext_resource type="Texture2D" uid="uid://cxtra8c7jmsie" path="res://Assets/Sprites/Weapons/Wood/Bow_Wood.png" id="2_yvubt"]
+[ext_resource type="Texture2D" uid="uid://v64qyu1bsps0" path="res://Assets/Sprites/Weapons/Wood/Arrow_Wood.png" id="3_r8nq4"]
+
+[sub_resource type="Animation" id="Animation_rydae"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WoodBow2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_141g0"]
+resource_name = "draw_woodbow"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WoodBow2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_8hpfd"]
+resource_name = "fire_woodbow"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WoodBow2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [2, 1, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_miflp"]
+_data = {
+"RESET": SubResource("Animation_rydae"),
+"draw_woodbow": SubResource("Animation_141g0"),
+"fire_woodbow": SubResource("Animation_8hpfd")
+}
+
+[node name="Weapon" type="Node2D"]
+script = ExtResource("1_8ld5v")
+draw_speed_scale = 0.75
+fire_speed_scale = 35.0
+arrow_speed = 350.0
+arrow_projectile_scene = ExtResource("2_dj4k7")
+
+[node name="WoodBow2D" type="Sprite2D" parent="."]
+position = Vector2(0, -4)
+texture = ExtResource("2_yvubt")
+hframes = 3
+
+[node name="WoodArrow2D" type="Sprite2D" parent="."]
+position = Vector2(1.5, -5)
+scale = Vector2(1.1875, 1)
+texture = ExtResource("3_r8nq4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_miflp")
+}
