@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://dnfspo8sfxdfh"]
+[gd_scene load_steps=13 format=3 uid="uid://dnfspo8sfxdfh"]
 
 [ext_resource type="Texture2D" uid="uid://drfdy2124dyq" path="res://Assets/Sprites/Player/Rogue/Idle/Idle-Sheet.png" id="1_b12gj"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_ktt5j"]
 [ext_resource type="Texture2D" uid="uid://ba6rftgqu4lj3" path="res://Assets/Sprites/Player/Rogue/Run/Run-Sheet.png" id="3_dgvjx"]
+[ext_resource type="Texture2D" uid="uid://cy4mnbucy8rda" path="res://Assets/Sprites/Player/Rogue/Death/Death-Sheet.png" id="4_b1nt2"]
 [ext_resource type="Script" path="res://Scripts/weapon_holder.gd" id="4_qadpk"]
 [ext_resource type="PackedScene" uid="uid://q2iaqy87ltc3" path="res://Scenes/weapon.tscn" id="5_kck02"]
 
@@ -35,6 +36,34 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Die2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(-0.0333333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_owea4"]
+resource_name = "die"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Die2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
 }
 
 [sub_resource type="Animation" id="Animation_acch8"]
@@ -74,13 +103,17 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5twcp"]
 _data = {
 "RESET": SubResource("Animation_qtrm6"),
+"die": SubResource("Animation_owea4"),
 "idle": SubResource("Animation_acch8"),
 "run": SubResource("Animation_f1g6t")
 }
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
+top_level = true
 collision_mask = 3
 script = ExtResource("1_ktt5j")
+base_death_anim_speed = 0.25
+max_health = 50
 
 [node name="Idle2D" type="Sprite2D" parent="."]
 position = Vector2(-1, -3)
@@ -90,6 +123,11 @@ hframes = 4
 [node name="Run2D" type="Sprite2D" parent="."]
 position = Vector2(0, -17)
 texture = ExtResource("3_dgvjx")
+hframes = 6
+
+[node name="Die2D" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("4_b1nt2")
 hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -145,7 +145,6 @@ motion_mode = 1
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -8)
 zoom = Vector2(2, 2)
-position_smoothing_enabled = true
 
 [node name="Environment" type="Node2D" parent="."]
 
