@@ -110,6 +110,8 @@ _data = {
 }
 
 [node name="OrcEnemy" type="CharacterBody2D" groups=["Enemies"]]
+collision_layer = 2
+collision_mask = 2
 motion_mode = 1
 script = ExtResource("1_ic4sa")
 stats = ExtResource("2_mjfce")

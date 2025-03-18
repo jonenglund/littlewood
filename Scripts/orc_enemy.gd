@@ -36,7 +36,7 @@ func _ready() -> void:
 	print("Enemy Health: ", stats.health, " | Move Speed: ", stats.move_speed, " | Size Multiplier: ", size_multiplier)
 	all_sprites_invis()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if is_dead:
 		return
 	
@@ -77,7 +77,7 @@ func die() -> void:
 	is_dead = true
 	all_sprites_invis()
 	set_physics_process(false)
-	$HitBox.disabled = true
+	$HitBox.call_deferred("set_disabled", true)
 	$EnemySprite2D/DieSprite2D.visible = true
 	$EnemyAnimationPlayer.play("die")
 	remove_from_group("Enemies")

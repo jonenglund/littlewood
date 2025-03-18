@@ -156,29 +156,30 @@ tile_set = SubResource("TileSet_wap3n")
 
 [node name="EnemySpawner" parent="." instance=ExtResource("3_315ww")]
 
-[node name="south wall" type="StaticBody2D" parent="."]
+[node name="Walls" type="Node" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="south wall"]
-position = Vector2(1, 214)
-rotation = 1.5708
+[node name="west wall" type="StaticBody2D" parent="Walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/west wall"]
+position = Vector2(-339, -5)
 shape = SubResource("RectangleShape2D_tp7tu")
 
-[node name="east wall" type="StaticBody2D" parent="."]
+[node name="north wall" type="StaticBody2D" parent="Walls"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="east wall"]
-position = Vector2(342, -3)
-shape = SubResource("RectangleShape2D_tp7tu")
-
-[node name="north wall" type="StaticBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="north wall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/north wall"]
 position = Vector2(1, -231)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_tp7tu")
 
-[node name="west wall" type="StaticBody2D" parent="."]
-collision_layer = 2
+[node name="east wall" type="StaticBody2D" parent="Walls"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="west wall"]
-position = Vector2(-339, -5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/east wall"]
+position = Vector2(342, -3)
+shape = SubResource("RectangleShape2D_tp7tu")
+
+[node name="south wall" type="StaticBody2D" parent="Walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/south wall"]
+position = Vector2(1, 214)
+rotation = 1.5708
 shape = SubResource("RectangleShape2D_tp7tu")
