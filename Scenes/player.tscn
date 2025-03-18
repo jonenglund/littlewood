@@ -113,7 +113,7 @@ top_level = true
 collision_mask = 3
 script = ExtResource("1_ktt5j")
 base_death_anim_speed = 0.25
-max_health = 50
+max_health = 10
 
 [node name="Idle2D" type="Sprite2D" parent="."]
 position = Vector2(-1, -3)

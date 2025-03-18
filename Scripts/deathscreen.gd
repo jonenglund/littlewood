@@ -1,9 +1,9 @@
 extends Control
 
-@export var time_slow_target: float = 0.0   # Final time_scale (frozen).
+@export var time_slow_target: float = 0.0   # Final time_scale (0 is frozen).
 @export var time_slow_duration: float = 2.0   # Duration to tween Engine.time_scale.
 
-@export var zoom_target: Vector2 = Vector2(5, 5)  # Target zoom for the Camera2D.
+@export var zoom_target: Vector2 = Vector2(5, 5)  # Target zoom for the Camera2D, bigger is more zoomed in.
 @export var zoom_duration: float = 2.0              # Duration to tween the camera zoom.
 
 @export var fade_duration: float = 0.5

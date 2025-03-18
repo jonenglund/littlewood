@@ -28,7 +28,7 @@ func Physics_Update(delta: float) -> void:
 func perform_attack() -> void:
 	# Ensure the enemy remains stationary.
 	enemy.velocity = Vector2.ZERO
-	if player.has_method("take_damage"):
+	if player.has_method("take_damage") and !enemy.is_dead:
 		player.take_damage(attack_damage)
 		print("Enemy attacked player for ", attack_damage, " damage!")
 	# Wait for cooldown before transitioning back to follow.
